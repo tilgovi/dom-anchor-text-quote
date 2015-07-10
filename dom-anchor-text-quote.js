@@ -18,9 +18,22 @@ export default class TextQuoteAnchor {
       throw new Error('missing required parameter "range"');
     }
 
+    let position = TextPositionAnchor.fromRange(range);
+    return this.fromPositionAnchor(position);
+  }
+
+  static fromSelector(selector) {
+    if (selector === undefined) {
+      throw new Error('missing required parameter "selector"');
+    }
+    let {exact, prefix, suffix} = selector;
+    return new TextQuoteSelector(exact, {prefix, suffix});
+  }
+
+  static fromPositionAnchor(anchor) {
     let root = global.document.body;
 
-    let {start, end} = TextPositionAnchor.fromRange(range);
+    let {start, end} = anchor;
     let exact = root.textContent.substr(start, end - start);
 
     let prefixStart = Math.max(0, start - 32);
@@ -30,14 +43,6 @@ export default class TextQuoteAnchor {
     let suffix = root.textContent.substr(end, suffixEnd - end);
 
     return new TextQuoteAnchor(exact, {prefix, suffix});
-  }
-
-  static fromSelector(selector) {
-    if (selector === undefined) {
-      throw new Error('missing required parameter "selector"');
-    }
-    let {exact, prefix, suffix} = selector;
-    return new TextQuoteSelector(exact, {prefix, suffix});
   }
 
   toRange() {
