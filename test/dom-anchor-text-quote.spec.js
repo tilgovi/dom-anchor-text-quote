@@ -66,6 +66,28 @@ describe('TextQuoteAnchor', () => {
       let construct = () => TextQuoteAnchor.fromSelector();
       assert.throws(construct, 'required parameter');
     });
+
+    it('returns a TextQuoteAnchor from a selector with exact quote', () => {
+      let selector = {
+        exact: 'You can\'t split life into diachronic segments.',
+      };
+      let anchor = TextQuoteAnchor.fromSelector(selector);
+      assert.instanceOf(anchor, TextQuoteAnchor);
+      assert.equal(anchor.exact, selector.exact);
+    });
+
+    it('returns a TextQuoteAnchor from a selector with context', () => {
+      let selector = {
+        exact: 'Friday the twenty-sixth.',
+        prefix: 'Today was what? ',
+        suffix: 'There would be a salary cheque for him on Monday.',
+      };
+      let anchor = TextQuoteAnchor.fromSelector(selector);
+      assert.instanceOf(anchor, TextQuoteAnchor);
+      assert.equal(anchor.exact, selector.exact);
+      assert.equal(anchor.prefix, selector.prefix);
+      assert.equal(anchor.suffix, selector.suffix);
+    });
   });
 
   describe('toRange', () => {
