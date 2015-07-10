@@ -18,44 +18,16 @@ export default class TextQuoteAnchor {
       throw new Error('missing required parameter "range"');
     }
 
-    let startNode = range.startContainer;
-    let startOffset = range.startOffset;
+    let root = global.document.body;
 
-    if (startNode.nodeType !== Node.TEXT_NODE) {
-      if (startOffset > 0) {
-        startNode = startNode.childNodes[startOffset];
-      }
-      startNode = getFirstTextNode(startNode);
-      startOffset = 0;
-    }
-
-    let endNode = range.endContainer;
-    let endOffset = range.endOffset;
-
-    if (endNode.nodeType !== Node.TEXT_NODE) {
-      if (endOffset > 0) {
-        endNode = endNode.childNodes[endOffset];
-      }
-      endNode = getFirstTextNode(endNode);
-      endOffset = 0;
-    }
-
-    let iter = global.document.createNodeIterator(
-      global.document.body, NodeFilter.SHOW_TEXT, null, false);
-
-    let start = seek(iter, startNode);
-    let end = start + seek(iter, endNode);
-
-    start += startOffset;
-    end += endOffset;
-
-    let exact = global.document.body.substr(start, end - start);
+    let {start, end} = TextPositionAnchor.fromRange(range);
+    let exact = root.textContent.substr(start, end - start);
 
     let prefixStart = Math.max(0, start - 32);
-    let prefix = global.document.body.substr(prefixStart, start - prefixStart);
+    let prefix = root.textContent.substr(prefixStart, start - prefixStart);
 
-    let suffixEnd = Math.min(global.document.body.textContent.length, end + 32);
-    let suffix = global.document.body.substr(end, suffixEnd - end);
+    let suffixEnd = Math.min(root.textContent.length, end + 32);
+    let suffix = root.textContent.substr(end, suffixEnd - end);
 
     return new TextQuoteAnchor(exact, {prefix, suffix});
   }
