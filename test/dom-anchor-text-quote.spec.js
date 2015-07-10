@@ -52,11 +52,12 @@ describe('TextQuoteAnchor', () => {
       assert.throws(construct, 'required parameter');
     });
 
-    it('constructs an anchor with context', () => {
+    it('returns a TextQuoteAnchor with context', () => {
       let range = global.document.createRange();
       let node = global.document.getElementsByTagName('code')[0];
       range.selectNodeContents(node);
       let anchor = TextQuoteAnchor.fromRange(range);
+      assert.instanceOf(anchor, TextQuoteAnchor);
       assert.equal(anchor.exact, 'commodo vitae');
     });
   });
