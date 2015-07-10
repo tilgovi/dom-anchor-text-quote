@@ -27,7 +27,7 @@ export default class TextQuoteAnchor {
       throw new Error('missing required parameter "selector"');
     }
     let {exact, prefix, suffix} = selector;
-    return new TextQuoteSelector(exact, {prefix, suffix});
+    return new TextQuoteAnchor(exact, {prefix, suffix});
   }
 
   static fromPositionAnchor(anchor) {
