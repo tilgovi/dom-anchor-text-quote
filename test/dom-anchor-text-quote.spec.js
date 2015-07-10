@@ -51,6 +51,14 @@ describe('TextQuoteAnchor', () => {
       let construct = () => TextQuoteAnchor.fromRange();
       assert.throws(construct, 'required parameter');
     });
+
+    it('constructs an anchor with context', () => {
+      let range = global.document.createRange();
+      let node = global.document.getElementsByTagName('code')[0];
+      range.selectNodeContents(node);
+      let anchor = TextQuoteAnchor.fromRange(range);
+      assert.equal(anchor.exact, 'commodo vitae');
+    });
   });
 
   describe('fromSelector', () => {
