@@ -19,10 +19,8 @@ describe('TextQuoteAnchor', () => {
     });
 
     it('requires an exact argument', () => {
-      it('requires a range argument', () => {
-        let construct = () => new TextQuoteAnchor();
-        assert.throws(construct, 'required parameter');
-      });
+      let construct = () => new TextQuoteAnchor();
+      assert.throws(construct, 'required parameter');
     });
 
     it('stores the exact quote', () => {
