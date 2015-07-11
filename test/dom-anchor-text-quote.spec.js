@@ -92,6 +92,55 @@ describe('TextQuoteAnchor', () => {
   });
 
   describe('toRange', () => {
+    it('finds an exact quote', () => {
+      let anchor = new TextQuoteAnchor('commodo vitae');
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, 'commodo vitae');
+    });
+
+    it('finds a close exact quote', () => {
+      let anchor = new TextQuoteAnchor('commodo cites');
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, 'commodo vitae');
+    });
+
+    it('finds a context quote', () => {
+      let exact = 'commodo vitae';
+      let prefix = 'condimentum sed, ';
+      let suffix = ', ornare sit amet';
+      let context = {prefix, suffix};
+      let anchor = new TextQuoteAnchor(exact, context);
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, 'commodo vitae');
+    });
+
+    it('finds a close context quote', () => {
+      let exact = 'commodo cites';
+      let prefix = 'condimentum sed, ';
+      let suffix = ', ornare sit amet';
+      let context = {prefix, suffix};
+      let anchor = new TextQuoteAnchor(exact, context);
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, 'commodo vitae');
+    });
+
+    it('disambiguates using the context', () => {
+      let exact = 'on';
+      let prefix = 'Donec n';
+      let suffix = ' enim';
+      let context = {prefix, suffix};
+      let anchor = new TextQuoteAnchor(exact, context);
+      let range = anchor.toRange();
+      let text = range.toString();
+      let textNode = range.commonAncestorContainer;
+      let anchorNode = textNode.parentNode;
+      assert.equal(text, 'on');
+      assert.equal(anchorNode.tagName, 'A');
+    });
   });
 
   describe('toSelector', () => {
