@@ -97,6 +97,14 @@ describe('TextQuoteAnchor', () => {
       assert.equal(text, 'commodo vitae');
     });
 
+    it('finds an exact quote longer than 32 characters', () => {
+      let expected = 'Quisque sit amet est et sapien ullamcorper pharetra';
+      let anchor = new TextQuoteAnchor(expected);
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, expected);
+    });
+
     it('finds a close exact quote', () => {
       let anchor = new TextQuoteAnchor('commodo cites');
       let range = anchor.toRange();
@@ -138,6 +146,30 @@ describe('TextQuoteAnchor', () => {
       let anchorNode = textNode.parentNode;
       assert.equal(text, 'on');
       assert.equal(anchorNode.tagName, 'A');
+    });
+
+    it('succeeds with the best match even if the context fails', () => {
+      let exact = 'commodo vitae';
+      let context = {
+        prefix: 'bogomips',
+        suffix: 'bogomips',
+      };
+      let anchor = new TextQuoteAnchor(exact, context);
+      let range = anchor.toRange();
+    });
+
+    it('throws an error when the quote is not found', () => {
+      let exact = 'bogus';
+      let anchor = new TextQuoteAnchor(exact);
+      let attempt = () => anchor.toRange();
+      assert.throws(attempt, 'no match found');
+    });
+
+    it('throws an error when a long quote is not found', () => {
+      let expected = 'Quisque sit amet est et sapien ullam triceracorn';
+      let anchor = new TextQuoteAnchor(expected);
+      let attempt = () => anchor.toRange();
+      assert.throws(attempt, 'no match found');
     });
   });
 
