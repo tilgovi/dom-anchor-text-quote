@@ -144,5 +144,20 @@ describe('TextQuoteAnchor', () => {
   });
 
   describe('toSelector', () => {
+    it('returns a selector for the stored exact quote', () => {
+      let anchor = new TextQuoteAnchor('a');
+      let selector = anchor.toSelector();
+      assert.equal(selector.type, 'TextQuoteSelector');
+      assert.equal(selector.exact, 'a');
+    });
+
+    it('returns a selector for the stored context quote', () => {
+      let anchor = new TextQuoteAnchor('a', {prefix: 'b', suffix: 'c'});
+      let selector = anchor.toSelector();
+      assert.equal(selector.type, 'TextQuoteSelector');
+      assert.equal(selector.exact, 'a');
+      assert.equal(selector.prefix, 'b');
+      assert.equal(selector.suffix, 'c');
+    });
   });
 });
