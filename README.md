@@ -33,12 +33,52 @@ Usage
 
 The module exposes a single constructor function, `TextQuoteAnchor`.
 
-## `new TextQuoteAnchor(exact, [prefix], [suffix])`
+## `new TextQuoteAnchor(exact, [context])`
+
+This constructor creates a new `TextQuoteAnchor`. The first argument is the
+`String` that the anchor selects. An optional argument, `context`, may have one
+or both of the keys `prefix` and `suffix` that may help anchor and disambiguate
+the quote.
 
 ## `TextQuoteAnchor.fromRange(range)`
 
+Provided with an existing `Range` instance this will return a
+`TextQuoteAnchor` that stores the exact text selected by the range and
+surrounding context up to thirty-two characters in either direction.
+
 ## `TextQuoteAnchor.fromSelector(selector)`
+
+Provided with an `Object` containing an `exact` key and, optionally, one or
+both of the keys `prefix` and `suffix` this will return a `TextQuoteAnchor`
+that corresponds to these strings.
+
+## `TextQuoteAnchor.fromPositionAnchor(anchor)`
+
+Provided with a `TextPositionAnchor` this will return a `TextQuoteAnchor` that
+stores the exact text selected by the `TextPositionAnchor` and surrounding
+context up to thirty-two characters in either direction.
+
+See the documentation for [dom-anchor-text-position)(https://github.com/hypothesis/dom-anchor-text-position)
+for details on `TextPositionAnchor`.
 
 ## `TextQuoteAnchor.prototype.toRange()`
 
+This method returns a `Range` object that selects the text of the anchor. It
+uses the context, if available, to disambiguate between multiple matches. This
+method may return a close match rather than an exact match.
+
 ## `TextQuoteAnchor.prototype.toSelector()`
+
+This method returns an `Object` that has the key `exact` with a `String` value
+that represents the selected text quote. It may one or both of the keys
+`prefix` and `suffix` if that context is available.
+
+## `TextQuoteAnchor.prototype.toPositionAnchor()`
+
+This method returns a `TextPositionAnchor` that selects the text of the anchor
+by text position. It uses the context, if available, to disambiguate between
+multiple matches. This method may return a close match rather than an exact
+match.
+
+See the documentation for [dom-anchor-text-position)(https://github.com/hypothesis/dom-anchor-text-position)
+for details on `TextPositionAnchor`.
