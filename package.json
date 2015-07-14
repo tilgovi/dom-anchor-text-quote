@@ -1,6 +1,6 @@
 {
   "name": "dom-anchor-text-quote",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "Convert between DOM Range instances and text quotes.",
   "scripts": {
     "test": "karma start"
