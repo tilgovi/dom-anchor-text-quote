@@ -36,30 +36,33 @@ Usage
 
 The module exposes a single constructor function, `TextQuoteAnchor`.
 
-### `new TextQuoteAnchor(exact, [context])`
+### `new TextQuoteAnchor(root, exact, [context])`
 
 This constructor creates a new `TextQuoteAnchor`. The first argument is the
-`String` that the anchor selects. An optional argument, `context`, may have one
-or both of the keys `prefix` and `suffix` that may help anchor and disambiguate
-the quote.
+context for anchor, the `Element` that contains the quote. The second argument
+is the `String` that the anchor selects. An optional argument, `context`, may
+have one or both of the keys `prefix` and `suffix` that may help anchor and
+disambiguate the quote.
 
-### `TextQuoteAnchor.fromRange(range)`
+### `TextQuoteAnchor.fromRange(root, range)`
 
 Provided with an existing `Range` instance this will return a
 `TextQuoteAnchor` that stores the exact text selected by the range and
-surrounding context up to thirty-two characters in either direction.
+surrounding context (up to thirty-two characters in either direction)
+within the text content of the `root` `Element`.
 
-### `TextQuoteAnchor.fromSelector(selector)`
+### `TextQuoteAnchor.fromSelector(root, selector)`
 
 Provided with an `Object` containing an `exact` key and, optionally, one or
 both of the keys `prefix` and `suffix` this will return a `TextQuoteAnchor`
-that corresponds to these strings.
+that corresponds to these strings within the text content of the `root`
+`Element`.
 
 ### `TextQuoteAnchor.fromPositionAnchor(anchor)`
 
 Provided with a `TextPositionAnchor` this will return a `TextQuoteAnchor` that
 stores the exact text selected by the `TextPositionAnchor` and surrounding
-context up to thirty-two characters in either direction.
+context (up to thirty-two characters in either direction).
 
 See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
 for details on `TextPositionAnchor`.

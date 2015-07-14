@@ -4,34 +4,34 @@ import seek from 'dom-seek'
 
 
 export default class TextQuoteAnchor {
-  constructor(exact, context = {}) {
+  constructor(root, exact, context = {}) {
+    if (root === undefined) {
+      throw new Error('missing required parameter "root"');
+    }
     if (exact === undefined) {
       throw new Error('missing required parameter "exact"');
     }
+    this.root = root;
     this.exact = exact;
     this.prefix = context.prefix;
     this.suffix = context.suffix;
   }
 
-  static fromRange(range) {
+  static fromRange(root, range) {
     if (range === undefined) {
       throw new Error('missing required parameter "range"');
     }
 
-    let position = TextPositionAnchor.fromRange(range);
+    let position = TextPositionAnchor.fromRange(root, range);
     return this.fromPositionAnchor(position);
   }
 
-  static fromSelector(selector) {
-    if (selector === undefined) {
-      throw new Error('missing required parameter "selector"');
-    }
-    let {exact, prefix, suffix} = selector;
-    return new TextQuoteAnchor(exact, {prefix, suffix});
+  static fromSelector(root, selector = {}) {
+    return new TextQuoteAnchor(root, selector.exact, selector);
   }
 
   static fromPositionAnchor(anchor) {
-    let root = global.document.body;
+    let root = anchor.root;
 
     let {start, end} = anchor;
     let exact = root.textContent.substr(start, end - start);
@@ -42,7 +42,7 @@ export default class TextQuoteAnchor {
     let suffixEnd = Math.min(root.textContent.length, end + 32);
     let suffix = root.textContent.substr(end, suffixEnd - end);
 
-    return new TextQuoteAnchor(exact, {prefix, suffix});
+    return new TextQuoteAnchor(root, exact, {prefix, suffix});
   }
 
   toRange() {
@@ -60,7 +60,7 @@ export default class TextQuoteAnchor {
   }
 
   toPositionAnchor() {
-    let root = global.document.body;
+    let root = this.root;
     let dmp = new DiffMatchPatch();
 
     dmp.Match_Distance = root.textContent.length * 2;
@@ -77,7 +77,7 @@ export default class TextQuoteAnchor {
     };
 
     let slices = this.exact.match(/(.|[\r\n]){1,32}/g);
-    let loc = root.textContent.length / 2;
+    let loc = (root.textContent.length / 2) | 0;
     let start = -1;
     let end = -1;
 
@@ -88,7 +88,7 @@ export default class TextQuoteAnchor {
 
     if (start === -1) {
       let firstSlice = slices.shift();
-      result = dmp.match_main(root.textContent, firstSlice, loc);
+      let result = dmp.match_main(root.textContent, firstSlice, loc);
       if (result > -1) {
         start = result;
         loc = end = start + firstSlice.length;
@@ -104,6 +104,6 @@ export default class TextQuoteAnchor {
       loc: loc,
     });
 
-    return new TextPositionAnchor(acc.start, acc.end);
+    return new TextPositionAnchor(root, acc.start, acc.end);
   }
 }
