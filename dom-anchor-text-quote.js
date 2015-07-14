@@ -1,6 +1,9 @@
 import DiffMatchPatch from 'diff-match-patch';
 import TextPositionAnchor from 'dom-anchor-text-position'
 
+// The DiffMatchPatch bitap has a hard 32-character pattern length limit.
+const CONTEXT_LENGTH = 32;
+
 
 export default class TextQuoteAnchor {
   constructor(root, exact, context = {}) {
@@ -35,10 +38,10 @@ export default class TextQuoteAnchor {
     let {start, end} = anchor;
     let exact = root.textContent.substr(start, end - start);
 
-    let prefixStart = Math.max(0, start - 32);
+    let prefixStart = Math.max(0, start - CONTEXT_LENGTH);
     let prefix = root.textContent.substr(prefixStart, start - prefixStart);
 
-    let suffixEnd = Math.min(root.textContent.length, end + 32);
+    let suffixEnd = Math.min(root.textContent.length, end + CONTEXT_LENGTH);
     let suffix = root.textContent.substr(end, suffixEnd - end);
 
     return new TextQuoteAnchor(root, exact, {prefix, suffix});
