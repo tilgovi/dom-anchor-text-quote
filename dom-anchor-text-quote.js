@@ -1,6 +1,5 @@
 import DiffMatchPatch from 'diff-match-patch';
 import TextPositionAnchor from 'dom-anchor-text-position'
-import seek from 'dom-seek'
 
 
 export default class TextQuoteAnchor {
