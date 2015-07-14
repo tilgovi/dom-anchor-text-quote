@@ -61,7 +61,7 @@ Provided with a `TextPositionAnchor` this will return a `TextQuoteAnchor` that
 stores the exact text selected by the `TextPositionAnchor` and surrounding
 context up to thirty-two characters in either direction.
 
-See the documentation for [dom-anchor-text-position)(https://github.com/hypothesis/dom-anchor-text-position)
+See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
 for details on `TextPositionAnchor`.
 
 ### `TextQuoteAnchor.prototype.toRange()`
@@ -83,5 +83,5 @@ by text position. It uses the context, if available, to disambiguate between
 multiple matches. This method may return a close match rather than an exact
 match.
 
-See the documentation for [dom-anchor-text-position)(https://github.com/hypothesis/dom-anchor-text-position)
+See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
 for details on `TextPositionAnchor`.
