@@ -31,7 +31,7 @@
     "browserify-istanbul": "^0.2.1",
     "chai": "^2.3.0",
     "diff-match-patch": "^1.0.0",
-    "dom-anchor-text-position": "^1.0.0",
+    "dom-anchor-text-position": "^1.0.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-rename": "^1.2.2",
