@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/tilgovi/dom-anchor-text-quote",
   "main": "dist/dom-anchor-text-quote.js",
-  "dependencies": {},
+  "dependencies": {
+    "dom-anchor-text-position": "^1.0.1"
+  },
   "devDependencies": {
     "babel": "^5.4.3",
     "babelify": "^6.1.1",
@@ -31,7 +33,6 @@
     "browserify-istanbul": "^0.2.1",
     "chai": "^2.3.0",
     "diff-match-patch": "^1.0.0",
-    "dom-anchor-text-position": "^1.0.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-rename": "^1.2.2",
