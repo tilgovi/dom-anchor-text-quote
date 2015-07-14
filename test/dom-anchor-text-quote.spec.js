@@ -191,6 +191,16 @@ describe('TextQuoteAnchor', () => {
       let attempt = () => anchor.toRange();
       assert.throws(attempt, 'no match found');
     });
+
+    it('uses a hint option to prioritize matches', () => {
+      let expected = 'Aenean';
+      let anchor = new TextQuoteAnchor(fixture.el, expected);
+      let first = fixture.el.textContent.indexOf('Aenean');
+      let last = fixture.el.textContent.lastIndexOf('Aenean');
+      let rangeFirst = anchor.toRange({hint: first});
+      let rangeLast = anchor.toRange({hint: last});
+      assert.notEqual(rangeFirst.startContainer, rangeLast.startContainer);
+    });
   });
 
   describe('toSelector', () => {

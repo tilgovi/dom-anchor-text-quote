@@ -44,8 +44,8 @@ export default class TextQuoteAnchor {
     return new TextQuoteAnchor(root, exact, {prefix, suffix});
   }
 
-  toRange() {
-    return this.toPositionAnchor().toRange();
+  toRange(options) {
+    return this.toPositionAnchor(options).toRange();
   }
 
   toSelector() {
@@ -58,7 +58,8 @@ export default class TextQuoteAnchor {
     return selector;
   }
 
-  toPositionAnchor() {
+  toPositionAnchor(options = {}) {
+    let {hint} = options;
     let root = this.root;
     let dmp = new DiffMatchPatch();
 
@@ -76,7 +77,7 @@ export default class TextQuoteAnchor {
     };
 
     let slices = this.exact.match(/(.|[\r\n]){1,32}/g);
-    let loc = (root.textContent.length / 2) | 0;
+    let loc = (hint === undefined) ? ((root.textContent.length / 2) | 0) : hint;
     let start = -1;
     let end = -1;
 

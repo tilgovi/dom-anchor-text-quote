@@ -67,11 +67,15 @@ context (up to thirty-two characters in either direction).
 See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
 for details on `TextPositionAnchor`.
 
-### `TextQuoteAnchor.prototype.toRange()`
+### `TextQuoteAnchor.prototype.toRange([options])`
 
 This method returns a `Range` object that selects the text of the anchor. It
 uses the context, if available, to disambiguate between multiple matches. This
 method may return a close match rather than an exact match.
+
+If the `options` argument is an `Object` with an integer valued `hint` key
+then the quote search will prioritize matches that are closer this offset
+over equivalent matches that are farther away.
 
 ### `TextQuoteAnchor.prototype.toSelector()`
 
