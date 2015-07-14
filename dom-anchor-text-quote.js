@@ -68,27 +68,20 @@ export default class TextQuoteAnchor {
 
     dmp.Match_Distance = root.textContent.length * 2;
 
-    let foldSlices = (acc, slice) => {
-      let result = dmp.match_main(root.textContent, slice, acc.loc);
-      if (result === -1) {
-        throw new Error('no match found');
-      }
-      acc.loc = result + slice.length;
-      acc.start = Math.min(acc.start, result);
-      acc.end = Math.max(acc.end, result + slice.length);
-      return acc;
-    };
-
+    // Work around a hard limit of the DiffMatchPatch bitap implementation.
+    // The search pattern must be no more than 32 characters.
     let slices = this.exact.match(/(.|[\r\n]){1,32}/g);
     let loc = (hint === undefined) ? ((root.textContent.length / 2) | 0) : hint;
     let start = -1;
     let end = -1;
 
+    // If the prefix is known then search for that first.
     if (this.prefix !== undefined) {
       let result = dmp.match_main(root.textContent, this.prefix, loc);
       if (result > -1) loc = end = start = result + this.prefix.length;
     }
 
+    // If the prefix was not found, search for the first slice.
     if (start === -1) {
       let firstSlice = slices.shift();
       let result = dmp.match_main(root.textContent, firstSlice, loc);
@@ -100,6 +93,26 @@ export default class TextQuoteAnchor {
       }
     }
 
+    // Create a fold function that will reduce slices to positional extents.
+    let foldSlices = (acc, slice) => {
+      let result = dmp.match_main(root.textContent, slice, acc.loc);
+      if (result === -1) {
+        throw new Error('no match found');
+      }
+
+      // The next slice should follow this one closely.
+      acc.loc = result + slice.length;
+
+      // Expand the start and end to a quote that includes all the slices.
+      acc.start = Math.min(acc.start, result);
+      acc.end = Math.max(acc.end, result + slice.length);
+
+      return acc;
+    };
+
+    // Use the fold function to establish the full quote extents.
+    // Expect the slices to be close to one another.
+    // This distance is deliberately generous for now.
     dmp.Match_Distance = 64;
     let acc = slices.reduce(foldSlices, {
       start: start,
