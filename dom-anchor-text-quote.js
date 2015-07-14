@@ -1,5 +1,5 @@
 import DiffMatchPatch from 'diff-match-patch';
-import TextPositionAnchor from 'dom-anchor-text-position'
+import TextPositionAnchor from 'dom-anchor-text-position';
 
 // The DiffMatchPatch bitap has a hard 32-character pattern length limit.
 const CONTEXT_LENGTH = 32;
