@@ -72,19 +72,20 @@ export default class TextQuoteAnchor {
     // The search pattern must be no more than 32 characters.
     let slices = this.exact.match(/(.|[\r\n]){1,32}/g);
     let loc = (hint === undefined) ? ((root.textContent.length / 2) | 0) : hint;
-    let start = -1;
-    let end = -1;
+    let start = Number.POSITIVE_INFINITY;
+    let end = Number.NEGATIVE_INFINITY;
+    let result = -1;
 
     // If the prefix is known then search for that first.
     if (this.prefix !== undefined) {
       let result = dmp.match_main(root.textContent, this.prefix, loc);
-      if (result > -1) loc = end = start = result + this.prefix.length;
+      if (result > -1) loc = result + this.prefix.length;
     }
 
     // If the prefix was not found, search for the first slice.
-    if (start === -1) {
+    if (result === -1) {
       let firstSlice = slices.shift();
-      let result = dmp.match_main(root.textContent, firstSlice, loc);
+      result = dmp.match_main(root.textContent, firstSlice, loc);
       if (result > -1) {
         start = result;
         loc = end = start + firstSlice.length;
