@@ -78,20 +78,18 @@ export default class TextQuoteAnchor {
 
     // If the prefix is known then search for that first.
     if (this.prefix !== undefined) {
-      let result = dmp.match_main(root.textContent, this.prefix, loc);
+      result = dmp.match_main(root.textContent, this.prefix, loc);
       if (result > -1) loc = result + this.prefix.length;
     }
 
-    // If the prefix was not found, search for the first slice.
-    if (result === -1) {
-      let firstSlice = slices.shift();
-      result = dmp.match_main(root.textContent, firstSlice, loc);
-      if (result > -1) {
-        start = result;
-        loc = end = start + firstSlice.length;
-      } else {
-        throw new Error('no match found');
-      }
+    // Search for the first slice.
+    let firstSlice = slices.shift();
+    result = dmp.match_main(root.textContent, firstSlice, loc);
+    if (result > -1) {
+      start = result;
+      loc = end = start + firstSlice.length;
+    } else {
+      throw new Error('no match found');
     }
 
     // Create a fold function that will reduce slices to positional extents.
