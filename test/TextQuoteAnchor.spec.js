@@ -64,7 +64,7 @@ describe('TextQuoteAnchor', () => {
 
     it('returns a TextQuoteAnchor with context', () => {
       let root = fixture.el;
-      let range = global.document.createRange();
+      let range = document.createRange();
       let node = root.querySelector('code');
       range.selectNodeContents(node);
       let anchor = TextQuoteAnchor.fromRange(root, range);
