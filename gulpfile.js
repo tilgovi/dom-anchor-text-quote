@@ -7,7 +7,7 @@ var uglify = require('gulp-uglify');
 
 
 gulp.task('default', function () {
-  return gulp.src('dom-anchor-text-quote.js')
+  return gulp.src('TextQuoteAnchor.js')
     .pipe(sourcemaps.init())
     .pipe(babel({modules: 'umd'}))
     .pipe(sourcemaps.write({sourceRoot: './'}))

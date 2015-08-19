@@ -20,7 +20,7 @@ Installation
 
 There are a few different ways to include the library.
 
-With a CommonJS bundler to `require('dom-anchor-text-quote')`:
+With a CommonJS bundler, to `require('dom-anchor-text-quote')`:
 
     npm install dom-anchor-text-quote
 
