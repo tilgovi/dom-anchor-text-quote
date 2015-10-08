@@ -3,8 +3,8 @@ Text Quote Anchor
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 [![NPM Package](https://img.shields.io/npm/v/dom-anchor-text-quote.svg)](https://www.npmjs.com/package/dom-anchor-text-quote)
-[![Build Status](https://travis-ci.org/hypothesis/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/hypothesis/dom-anchor-text-quote)
-[![Coverage Status](https://coveralls.io/repos/hypothesis/dom-anchor-text-quote/badge.svg?branch=master)](https://coveralls.io/r/hypothesis/dom-anchor-text-quote?branch=master)
+[![Build Status](https://travis-ci.org/tilgovi/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/tilgovi/dom-anchor-text-quote)
+[![Coverage Status](https://coveralls.io/repos/tilgovi/dom-anchor-text-quote/badge.svg?branch=master)](https://coveralls.io/r/tilgovi/dom-anchor-text-quote?branch=master)
 
 This library offers conversion between a DOM `Range` instance and a text
 quote selector as defined by the Web Annotation Data Model.
@@ -64,7 +64,7 @@ Provided with a `TextPositionAnchor` this will return a `TextQuoteAnchor` that
 stores the exact text selected by the `TextPositionAnchor` and surrounding
 context (up to thirty-two characters in either direction).
 
-See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
+See the documentation for [dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
 for details on `TextPositionAnchor`.
 
 ### `TextQuoteAnchor.prototype.toRange([options])`
@@ -90,5 +90,5 @@ by text position. It uses the context, if available, to disambiguate between
 multiple matches. This method may return a close match rather than an exact
 match.
 
-See the documentation for [dom-anchor-text-position](https://github.com/hypothesis/dom-anchor-text-position)
+See the documentation for [dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
 for details on `TextPositionAnchor`.
