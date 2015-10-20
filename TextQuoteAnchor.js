@@ -2,7 +2,9 @@ import DiffMatchPatch from 'diff-match-patch';
 import TextPositionAnchor from 'dom-anchor-text-position';
 
 // The DiffMatchPatch bitap has a hard 32-character pattern length limit.
-const CONTEXT_LENGTH = 32;
+const SLICE_LENGTH = 32;
+const SLICE_RE = new RegExp('(.|[\r\n]){1,' + String(SLICE_LENGTH) + '}', 'g');
+const CONTEXT_LENGTH = SLICE_LENGTH;
 
 
 export default class TextQuoteAnchor {
@@ -69,17 +71,48 @@ export default class TextQuoteAnchor {
     dmp.Match_Distance = root.textContent.length * 2;
 
     // Work around a hard limit of the DiffMatchPatch bitap implementation.
-    // The search pattern must be no more than 32 characters.
-    let slices = this.exact.match(/(.|[\r\n]){1,32}/g);
+    // The search pattern must be no more than SLICE_LENGTH characters.
+    let slices = this.exact.match(SLICE_RE);
     let loc = (hint === undefined) ? ((root.textContent.length / 2) | 0) : hint;
     let start = Number.POSITIVE_INFINITY;
     let end = Number.NEGATIVE_INFINITY;
     let result = -1;
+    let havePrefix = this.prefix !== undefined;
+    let haveSuffix = this.suffix !== undefined;
+    let contextMissing = false;
 
     // If the prefix is known then search for that first.
-    if (this.prefix !== undefined) {
+    if (havePrefix) {
       result = dmp.match_main(root.textContent, this.prefix, loc);
-      if (result > -1) loc = result + this.prefix.length;
+      if (result > -1) {
+        loc = result + this.prefix.length;
+      } else {
+        contextMissing = true;
+      }
+    }
+
+    // If we have a suffix, and either a) we have no prefix, or b) the prefix
+    // wasn't found, then search for it.
+    if (haveSuffix && (!havePrefix || contextMissing)) {
+      result = dmp.match_main(root.textContent, this.suffix, loc);
+      if (result > -1) {
+        loc = result - this.suffix.length - this.exact.length;
+        contextMissing = false;
+      } else {
+        contextMissing = true;
+      }
+    }
+
+    // If we had a prefix or suffix, but didn't find them, we should now be
+    // pretty skeptical that the exact string is in the document.
+    //
+    // For strings that are likely to appear in the document simply by chance
+    // (i.e. short ones), we should make the match requirements stricter in this
+    // case. A match threshold of 0.25 corresponds (very roughly) to a word
+    // deletion/insertion in a string of length 32 (average English word length
+    // of 8) and permits no errors for strings of length < 4.
+    if (contextMissing && this.exact.length < SLICE_LENGTH) {
+      dmp.Match_Threshold = 0.25;
     }
 
     // Search for the first slice.
