@@ -178,6 +178,30 @@ describe('TextQuoteAnchor', () => {
       let range = anchor.toRange();
     });
 
+    it('will match more strictly for short strings when the context fails', () => {
+      let exact = 'elit efoo';
+      let context = {
+        prefix: 'some rubbish here',
+        suffix: 'something completely different',
+      };
+      let anchor = new TextQuoteAnchor(fixture.el, exact, context);
+      let attempt = () => anchor.toRange();
+      assert.throws(attempt, 'no match found');
+    });
+
+    it('remains lax for short strings if one context hint succeeds', () => {
+      let exact = 'elit efoo';
+      let context = {
+        prefix: 'some rubbish here',
+        suffix: ' tincidunt condimentum, eros ips',
+      };
+      let anchor = new TextQuoteAnchor(fixture.el, exact, context);
+      let attempt = () => anchor.toRange();
+      let range = anchor.toRange();
+      let text = range.toString();
+      assert.equal(text, 'elit eget');
+    });
+
     it('throws an error when the quote is not found', () => {
       let exact = 'bogus';
       let anchor = new TextQuoteAnchor(fixture.el, exact);
