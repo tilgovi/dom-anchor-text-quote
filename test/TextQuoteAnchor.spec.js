@@ -154,11 +154,25 @@ describe('TextQuoteAnchor', () => {
       assert.equal(text, 'commodo vitae');
     });
 
-    it('disambiguates using the context', () => {
+    it('can disambiguate using the prefix', () => {
       let exact = 'on';
-      let prefix = 'Donec n';
-      let suffix = ' enim';
-      let context = {prefix, suffix};
+      let context = {
+        prefix: 'Donec n',
+      };
+      let anchor = new TextQuoteAnchor(fixture.el, exact, context);
+      let range = anchor.toRange();
+      let text = range.toString();
+      let textNode = range.commonAncestorContainer;
+      let anchorNode = textNode.parentNode;
+      assert.equal(text, 'on');
+      assert.equal(anchorNode.tagName, 'A');
+    });
+
+    it('can disambiguate using the suffix', () => {
+      let exact = 'on';
+      let context = {
+        suffix: ' enim in',
+      };
       let anchor = new TextQuoteAnchor(fixture.el, exact, context);
       let range = anchor.toRange();
       let text = range.toString();
