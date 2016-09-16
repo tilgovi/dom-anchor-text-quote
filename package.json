@@ -23,11 +23,6 @@
   },
   "homepage": "https://github.com/tilgovi/dom-anchor-text-quote",
   "main": "index.js",
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
   "dependencies": {
     "diff-match-patch": "^1.0.0",
     "dom-anchor-text-position": "^2.0.0"
