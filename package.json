@@ -22,8 +22,7 @@
     "url": "https://github.com/tilgovi/dom-anchor-text-quote/issues"
   },
   "homepage": "https://github.com/tilgovi/dom-anchor-text-quote",
-  "main": "dist/TextQuoteAnchor.js",
-  "browser": "TextQuoteAnchor.js",
+  "main": "index.js",
   "browserify": {
     "transform": [
       "babelify"

@@ -5,8 +5,18 @@ var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
+gulp.task('build', function () {
+  return gulp.src('TextQuoteAnchor.js')
+    .pipe(sourcemaps.init())
+    .pipe(babel())
+    .pipe(sourcemaps.write({sourceRoot: './'}))
+    .pipe(gulp.dest('lib'))
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.write('./', {sourceRoot: './'}))
+    .pipe(gulp.dest('lib'))
+});
 
-gulp.task('default', function () {
+gulp.task('umd', function () {
   return gulp.src('TextQuoteAnchor.js')
     .pipe(sourcemaps.init())
     .pipe(babel({modules: 'umd'}))
@@ -18,3 +28,5 @@ gulp.task('default', function () {
     .pipe(sourcemaps.write('./', {sourceRoot: './'}))
     .pipe(gulp.dest('dist'))
 });
+
+gulp.task('default', ['build', 'umd']);
