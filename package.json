@@ -2,6 +2,7 @@
   "name": "dom-anchor-text-quote",
   "version": "2.0.2",
   "description": "Convert between DOM Range instances and text quotes.",
+  "main": "index.js",
   "scripts": {
     "test": "BABEL_ENV=test karma start --single-run",
     "prepublish": "babel -d lib src"
@@ -23,7 +24,6 @@
     "url": "https://github.com/tilgovi/dom-anchor-text-quote/issues"
   },
   "homepage": "https://github.com/tilgovi/dom-anchor-text-quote",
-  "main": "index.js",
   "dependencies": {
     "diff-match-patch": "^1.0.0",
     "dom-anchor-text-position": "^2.0.0"
