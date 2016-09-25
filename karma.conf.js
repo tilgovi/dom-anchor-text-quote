@@ -1,35 +1,25 @@
-var fs = require('fs');
-
 module.exports = function(config) {
   config.set({
     browsers: ['PhantomJS'],
-    frameworks: [
-      'fixture',
-      'browserify',
-      'chai',
-      'mocha',
-      'source-map-support'
-    ],
+    browserify: {debug: true, transform: ['babelify']},
+    frameworks: ['browserify', 'chai', 'fixture', 'mocha'],
     files: [
-      'test/*.spec.js',
+      'test/*.js',
       'test/fixtures/*.html'
     ],
-    reporters: ['progress', 'coverage'].concat(
-      (process.env.COVERALLS_REPO_TOKEN ? ['coveralls'] : [])),
     preprocessors: {
-      'test/*.spec.js': ['browserify'],
+      'test/*.js': ['browserify'],
       'test/fixtures/*.html': ['html2js']
     },
-    browserify: {
-      debug: true,
-      transform: ['babelify', 'browserify-istanbul']
-    },
+    reporters: ['progress', 'coverage'].concat(
+      (process.env.COVERALLS_REPO_TOKEN ? ['coveralls'] : [])),
     coverageReporter: {
       reporters: [
-        {type: 'lcovonly'},
-        {type: 'text'}
+        {type: 'html', subdir: '.'},
+        {type: 'json', subdir: '.'},
+        {type: 'lcovonly', subdir: '.'},
+        {type: 'text', subdir: '.'}
       ]
-    },
-    singleRun: true
-  });
-};
+    }
+  })
+}
