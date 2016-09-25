@@ -2,8 +2,8 @@ language: node_js
 sudo: false
 node_js:
 - stable
-before_script:
-- npm install karma-coveralls
+after_success:
+- bash <(curl -s https://codecov.io/bash)
 cache:
   directories:
   - node_modules
@@ -14,6 +14,3 @@ notifications:
     - chat.freenode.net#annotator
     on_success: change
     on_failure: change
-env:
-  global:
-  - secure: icwC3zPWB+IxS4xkDMxwuBw95oLmnsp8J1l78TXyVXpQTQKgUC7wIK/StcoT12qx06lcPnys5pJdsOP90Zk0otsBmNUcryirSKKBgovr03hhaECjnvxY9wXiSVozqT6/ScgjLi7j5IMGnNP8szXa+1IYsrSd7eUi06W+2qWHbDE=
