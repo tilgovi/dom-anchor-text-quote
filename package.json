@@ -3,7 +3,8 @@
   "version": "2.0.2",
   "description": "Convert between DOM Range instances and text quotes.",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "prepublish": "babel -d lib src"
   },
   "repository": {
     "type": "git",
@@ -33,11 +34,6 @@
     "browserify": "^10.2.4",
     "browserify-istanbul": "^0.2.1",
     "chai": "^2.3.0",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0",
     "karma": "^0.12.32",
     "karma-browserify": "^4.2.1",
     "karma-chai": "^0.1.0",

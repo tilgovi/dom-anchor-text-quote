@@ -1,4 +1,4 @@
-import TextQuoteAnchor from '../TextQuoteAnchor';
+import TextQuoteAnchor from '../src';
 
 describe('TextQuoteAnchor', () => {
   before(() => {

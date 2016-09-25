@@ -1,9 +1,6 @@
 .gitignore
 .travis.yml
 coverage
-gulpfile.js
 karma.conf.js
 src
 test
-dist
-/TextQuoteAnchor.js
