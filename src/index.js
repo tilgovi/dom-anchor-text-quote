@@ -1,5 +1,5 @@
 import DiffMatchPatch from 'diff-match-patch';
-import TextPositionAnchor from 'dom-anchor-text-position';
+import * as textPosition from 'dom-anchor-text-position';
 
 // The DiffMatchPatch bitap has a hard 32-character pattern length limit.
 const SLICE_LENGTH = 32;
@@ -26,7 +26,8 @@ export default class TextQuoteAnchor {
       throw new Error('missing required parameter "range"');
     }
 
-    let position = TextPositionAnchor.fromRange(root, range);
+    let position = textPosition.fromRange(root, range);
+    position.root = root;
     return this.fromPositionAnchor(position);
   }
 
@@ -50,7 +51,8 @@ export default class TextQuoteAnchor {
   }
 
   toRange(options) {
-    return this.toPositionAnchor(options).toRange();
+    let position = this.toPositionAnchor(options);
+    return textPosition.toRange(this.root, position);
   }
 
   toSelector() {
@@ -135,6 +137,6 @@ export default class TextQuoteAnchor {
       loc: loc,
     });
 
-    return new TextPositionAnchor(root, acc.start, acc.end);
+    return {start: acc.start, end: acc.end}
   }
 }
