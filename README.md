@@ -6,17 +6,19 @@ Text Quote Anchor
 [![Build Status](https://travis-ci.org/tilgovi/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/tilgovi/dom-anchor-text-quote)
 [![Coverage Status](https://img.shields.io/codecov/c/github/tilgovi/dom-anchor-text-quote/master.svg)](https://codecov.io/gh/tilgovi/dom-anchor-text-quote)
 
-Convert between DOM `Range` instances and `TextQuoteSelector` instances;
-or between `TextPositionSelector` instances and `TextQuoteSeletor` instances.
+Identify and describe ranges of a document using text quotes.
 
-For more information on `Range` see
-[the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Range).
+This library is capable of search for text content within a DOM node, utilizing
+optional context strings and/or offset hints to disambiguate matches. The
+matching is performed using approximate search techniques provided by the
+`diff-match-patch` library. Conversely, it provides a function to extract the
+text content of a DOM `Range` instance and its surrounding context.
 
-For more information on `TextPositionSelector` see
-[the specification](http://www.w3.org/TR/annotation-model/#text-position-selector).
+Relevant specifications:
 
-For more information on `TextQuoteSelector` see
-[the specification](http://www.w3.org/TR/annotation-model/#text-quote-selector).
+- [Range](https://dom.spec.whatwg.org/#ranges)
+- [Web Annotation TextPositionSelector](http://www.w3.org/TR/annotation-model/#text-position-selector)
+- [Web Annotation TextQuoteSelector](http://www.w3.org/TR/annotation-model/#text-quote-selector)
 
 Installation
 ============
