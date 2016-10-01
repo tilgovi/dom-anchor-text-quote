@@ -56,7 +56,7 @@ The resulting `Object` is a text position selector suitable for use with the
 [dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
 for details.
 
-### `toRange(root, [options])`
+### `toRange(root, selector, [options])`
 
 This function is a short-hand for the following equivalent code:
 
@@ -70,7 +70,7 @@ let range = textPosition.toRange(position)
 
 The return value is a `Range` instance.
 
-### `toTextPosition(root, selector, options)`
+### `toTextPosition(root, selector, [options])`
 
 Given an `Object` `selector` with an `exact` key, returns an `Object` with
 keys `start` and `end`. The sub-string `[start, end)` of the text content of
