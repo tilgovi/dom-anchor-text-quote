@@ -4,7 +4,7 @@ Text Quote Anchor
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 [![NPM Package](https://img.shields.io/npm/v/dom-anchor-text-quote.svg)](https://www.npmjs.com/package/dom-anchor-text-quote)
 [![Build Status](https://travis-ci.org/tilgovi/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/tilgovi/dom-anchor-text-quote)
-[![Coverage Status](https://coveralls.io/repos/tilgovi/dom-anchor-text-quote/badge.svg?branch=master)](https://coveralls.io/r/tilgovi/dom-anchor-text-quote?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tilgovi/dom-anchor-text-quote/master.svg)](https://codecov.io/gh/tilgovi/dom-anchor-text-quote)
 
 Convert between DOM `Range` instances and `TextQuoteSelector` instances;
 or between `TextPositionSelector` instances and `TextQuoteSeletor` instances.
