@@ -18,77 +18,63 @@ For more information on the text quote selector see
 Installation
 ============
 
-There are a few different ways to include the library.
-
-With a CommonJS bundler, to `require('dom-anchor-text-quote')`:
+To `require('dom-anchor-text-quote')`:
 
     npm install dom-anchor-text-quote
-
-With a script tag, include one of the scripts from the `dist` directory.
-
-With AMD loaders, these scripts should also work.
 
 Usage
 =====
 
-
 ## API Documentation
 
-The module exposes a single constructor function, `TextQuoteAnchor`.
+### `fromRange(root, range)`
 
-### `new TextQuoteAnchor(root, exact, [context])`
+This function is a short-hand for the following equivalent code:
 
-This constructor creates a new `TextQuoteAnchor`. The first argument is the
-context for anchor, the `Element` that contains the quote. The second argument
-is the `String` that the anchor selects. An optional argument, `context`, may
-have one or both of the keys `prefix` and `suffix` that may help anchor and
-disambiguate the quote.
+``` js
+import * as textPosition from 'dom-anchor-text-position'
+import * as textQuote from 'dom-anchor-text-quote'
 
-### `TextQuoteAnchor.fromRange(root, range)`
+let position = textPosition.fromRange(root, range)
+let selector = textQuote.fromTextPosition(root, position)
+```
 
-Provided with an existing `Range` instance this will return a
-`TextQuoteAnchor` that stores the exact text selected by the range and
-surrounding context (up to thirty-two characters in either direction)
-within the text content of the `root` `Element`.
+The return value is an `Object` with `exact`, `prefix` and `suffix` keys.
 
-### `TextQuoteAnchor.fromSelector(root, selector)`
+### `fromTextPosition(root, selector)`
 
-Provided with an `Object` containing an `exact` key and, optionally, one or
-both of the keys `prefix` and `suffix` this will return a `TextQuoteAnchor`
-that corresponds to these strings within the text content of the `root`
-`Element`.
+Given an `Object` containing `start` and `end` keys, returns an `Object`
+containing the sub-string `[start, end)` of the text content of `root` `Node`
+in the value of the `exact` key and surrounding context (up to thirty-two
+characters in either direction) in the `prefix` and `suffix` keys.
 
-### `TextQuoteAnchor.fromPositionAnchor(anchor)`
+The resulting `Object` is a text position selector suitable for use with the
+`dom-anchor-text-position` library. See the documentation of
+[dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
+for details.
 
-Provided with a `TextPositionAnchor` this will return a `TextQuoteAnchor` that
-stores the exact text selected by the `TextPositionAnchor` and surrounding
-context (up to thirty-two characters in either direction).
+### `toRange(root, [options])`
 
-See the documentation for [dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
-for details on `TextPositionAnchor`.
+This function is a short-hand for the following equivalent code:
 
-### `TextQuoteAnchor.prototype.toRange([options])`
+``` js
+import * as textPosition from 'dom-anchor-text-position'
+import * as textQuote from 'dom-anchor-text-quote'
 
-This method returns a `Range` object that selects the text of the anchor. It
-uses the context, if available, to disambiguate between multiple matches. This
-method may return a close match rather than an exact match.
+let position = textQuote.toTextPosition(root, selector)
+let range = textPosition.toRange(position)
+```
+
+The return value is a `Range` instance.
+
+### `toTextPosition(root, selector, options)`
+
+Given an `Object` `selector` with an `exact` key, returns an `Object` with
+keys `start` and `end`. The sub-string `[start, end)` of the text content of
+the `root` `Node` is an approximate match for the value of the `exact` key.
+Optional `selector` keys `prefix` and `suffix`, if provided, are used to
+disambiguate between multiple matches.
 
 If the `options` argument is an `Object` with an integer valued `hint` key
-then the quote search will prioritize matches that are closer this offset
+then the quote search will prioritize matches that are closer to this offset
 over equivalent matches that are farther away.
-
-### `TextQuoteAnchor.prototype.toSelector()`
-
-This method returns an `Object` that has the key `exact` with a `String` value
-that represents the selected text quote. It may one or both of the keys
-`prefix` and `suffix` if that context is available.
-
-### `TextQuoteAnchor.prototype.toPositionAnchor()`
-
-This method returns a `TextPositionAnchor` that selects the text of the anchor
-by text position. It uses the context, if available, to disambiguate between
-multiple matches. This method may return a close match rather than an exact
-match.
-
-See the documentation for [dom-anchor-text-position](https://github.com/tilgovi/dom-anchor-text-position)
-for details on `TextPositionAnchor`.
