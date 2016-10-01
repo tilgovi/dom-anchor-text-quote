@@ -7,7 +7,7 @@ const SLICE_RE = new RegExp('(.|[\r\n]){1,' + String(SLICE_LENGTH) + '}', 'g')
 const CONTEXT_LENGTH = SLICE_LENGTH
 
 
-function fromRange(root, range) {
+export function fromRange(root, range) {
   if (root === undefined) {
     throw new Error('missing required parameter "root"')
   }
@@ -15,13 +15,12 @@ function fromRange(root, range) {
     throw new Error('missing required parameter "range"')
   }
 
-  let positionSelector = textPosition.fromRange(root, range)
-
-  return fromTextPosition(root, positionSelector)
+  let position = textPosition.fromRange(root, range)
+  return fromTextPosition(root, position)
 }
 
 
-function fromTextPosition(root, selector) {
+export function fromTextPosition(root, selector) {
   if (root === undefined) {
     throw new Error('missing required parameter "root"')
   }
@@ -57,13 +56,13 @@ function fromTextPosition(root, selector) {
 }
 
 
-function toRange(root, selector, options = {}) {
+export function toRange(root, selector, options = {}) {
   let position = toTextPosition(root, selector, options)
   return textPosition.toRange(root, position)
 }
 
 
-function toTextPosition(root, selector, options = {}) {
+export function toTextPosition(root, selector, options = {}) {
   if (root === undefined) {
     throw new Error('missing required parameter "root"')
   }
@@ -148,52 +147,4 @@ function toTextPosition(root, selector, options = {}) {
   })
 
   return {start: acc.start, end: acc.end}
-}
-
-
-export default class TextQuoteAnchor {
-  constructor(root, exact, context = {}) {
-    if (root === undefined) {
-      throw new Error('missing required parameter "root"')
-    }
-    if (exact === undefined) {
-      throw new Error('missing required parameter "exact"')
-    }
-    this.root = root
-    this.exact = exact
-    this.prefix = context.prefix
-    this.suffix = context.suffix
-  }
-
-  static fromRange(root, range) {
-    let selector = fromRange(root, range)
-    return new TextQuoteAnchor(root, selector.exact, selector)
-  }
-
-  static fromSelector(root, selector = {}) {
-    return new TextQuoteAnchor(root, selector.exact, selector)
-  }
-
-  static fromPositionAnchor(anchor) {
-    let quote = fromTextPosition(anchor.root, anchor)
-    return new TextQuoteAnchor(anchor.root, quote.exact, quote)
-  }
-
-  toRange(options) {
-    return toRange(this.root, this, options)
-  }
-
-  toSelector() {
-    let selector = {
-      type: 'TextQuoteSelector',
-      exact: this.exact,
-    }
-    if (this.prefix !== undefined) selector.prefix = this.prefix
-    if (this.suffix !== undefined) selector.suffix = this.suffix
-    return selector
-  }
-
-  toPositionAnchor(options = {}) {
-    return toTextPosition(this.root, this, options)
-  }
 }
