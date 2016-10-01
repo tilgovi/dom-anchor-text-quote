@@ -6,13 +6,16 @@ Text Quote Anchor
 [![Build Status](https://travis-ci.org/tilgovi/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/tilgovi/dom-anchor-text-quote)
 [![Coverage Status](https://coveralls.io/repos/tilgovi/dom-anchor-text-quote/badge.svg?branch=master)](https://coveralls.io/r/tilgovi/dom-anchor-text-quote?branch=master)
 
-This library offers conversion between a DOM `Range` instance and a text
-quote selector as defined by the Web Annotation Data Model.
+Convert between DOM `Range` instances and `TextQuoteSelector` instances;
+or between `TextPositionSelector` instances and `TextQuoteSeletor` instances.
 
 For more information on `Range` see
 [the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Range).
 
-For more information on the text quote selector see
+For more information on `TextPositionSelector` see
+[the specification](http://www.w3.org/TR/annotation-model/#text-position-selector).
+
+For more information on `TextQuoteSelector` see
 [the specification](http://www.w3.org/TR/annotation-model/#text-quote-selector).
 
 Installation
