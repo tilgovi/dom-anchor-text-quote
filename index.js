@@ -1,1 +1,1 @@
-module.exports = require('./lib/TextQuoteAnchor');
+module.exports = require('./lib');
