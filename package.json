@@ -1,6 +1,6 @@
 {
   "name": "dom-anchor-text-quote",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Convert between DOM Range instances and text quotes.",
   "main": "index.js",
   "scripts": {
