@@ -6,13 +6,18 @@ Text Quote Anchor
 [![Build Status](https://travis-ci.org/tilgovi/dom-anchor-text-quote.svg?branch=master)](https://travis-ci.org/tilgovi/dom-anchor-text-quote)
 [![Coverage Status](https://img.shields.io/codecov/c/github/tilgovi/dom-anchor-text-quote/master.svg)](https://codecov.io/gh/tilgovi/dom-anchor-text-quote)
 
-Identify and describe ranges of a document using text quotes.
+Find and describe ranges of a document using text quotes.
 
-This library is capable of search for text content within a DOM node, utilizing
-optional context strings and/or offset hints to disambiguate matches. The
-matching is performed using approximate search techniques provided by the
-`diff-match-patch` library. Conversely, it provides a function to extract the
-text content of a DOM `Range` instance and its surrounding context.
+This library is capable of searching for text content within a DOM node,
+utilizing optional context strings and/or offset hints to disambiguate matches.
+The matching is performed using approximate search techniques provided by the
+`diff-match-patch` library.
+
+Functions are provided for finding a quote within a DOM node and returning
+either the text offsets of the best match or a DOM `Range` instance, as well
+as functions to perform the inverse operations of describing a `Range` or a
+sub-string identified by text offsets in terms of the selected text and its
+surrounding context.
 
 Relevant specifications:
 
