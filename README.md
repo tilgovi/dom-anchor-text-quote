@@ -46,8 +46,10 @@ This function is a short-hand for the following equivalent code:
 import * as textPosition from 'dom-anchor-text-position'
 import * as textQuote from 'dom-anchor-text-quote'
 
-let position = textPosition.fromRange(root, range)
-let selector = textQuote.fromTextPosition(root, position)
+function fromRange(root, range) {
+  let position = textPosition.fromRange(root, range)
+  let selector = textQuote.fromTextPosition(root, position)
+}
 ```
 
 The return value is an `Object` with `exact`, `prefix` and `suffix` keys.
@@ -72,8 +74,10 @@ This function is a short-hand for the following equivalent code:
 import * as textPosition from 'dom-anchor-text-position'
 import * as textQuote from 'dom-anchor-text-quote'
 
-let position = textQuote.toTextPosition(root, selector)
-let range = textPosition.toRange(position)
+function toRange(root, selector, options) {
+  let position = textQuote.toTextPosition(root, selector, options)
+  return textPosition.toRange(position)
+}
 ```
 
 The return value is a `Range` instance or `null` if the quote is not found.
