@@ -154,16 +154,16 @@ describe('textQuote', () => {
       assert.equal(text, 'commodo vitae')
     })
 
-    it('throws an error when the quote is not found', () => {
+    it('returns null when the quote is not found', () => {
       let exact = 'bogus'
-      let attempt = () => toRange(fixture.el, {exact})
-      assert.throws(attempt, 'no match found')
+      let range = toRange(fixture.el, {exact})
+      assert.isNull(range)
     })
 
     it('throws an error when a long quote is not found', () => {
       let exact = 'Quisque sit amet est et sapien ullam triceracorn'
-      let attempt = () => toRange(fixture.el, {exact})
-      assert.throws(attempt, 'no match found')
+      let range = toRange(fixture.el, {exact})
+      assert.isNull(range)
     })
 
     it('uses a hint option to prioritize matches', () => {

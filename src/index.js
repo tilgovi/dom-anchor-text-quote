@@ -58,7 +58,11 @@ export function fromTextPosition(root, selector) {
 
 export function toRange(root, selector, options = {}) {
   let position = toTextPosition(root, selector, options)
-  return textPosition.toRange(root, position)
+  if (position === null) {
+    return null
+  } else {
+    return textPosition.toRange(root, position)
+  }
 }
 
 
@@ -116,14 +120,14 @@ export function toTextPosition(root, selector, options = {}) {
     start = result
     loc = end = start + firstSlice.length
   } else {
-    throw new Error('no match found')
+    return null
   }
 
   // Create a fold function that will reduce slices to positional extents.
   let foldSlices = (acc, slice) => {
     let result = dmp.match_main(root.textContent, slice, acc.loc)
     if (result === -1) {
-      throw new Error('no match found')
+      return null
     }
 
     // The next slice should follow this one closely.
@@ -140,11 +144,14 @@ export function toTextPosition(root, selector, options = {}) {
   // Expect the slices to be close to one another.
   // This distance is deliberately generous for now.
   dmp.Match_Distance = 64
-  let acc = slices.reduce(foldSlices, {
-    start: start,
-    end: end,
-    loc: loc,
-  })
+  let acc = {start, end, loc}
+
+  for (let i in slices) {
+    acc = foldSlices(acc, slices[i])
+    if (acc === null) {
+      return null
+    }
+  }
 
   return {start: acc.start, end: acc.end}
 }

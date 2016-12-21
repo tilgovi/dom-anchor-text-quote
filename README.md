@@ -76,15 +76,16 @@ let position = textQuote.toTextPosition(root, selector)
 let range = textPosition.toRange(position)
 ```
 
-The return value is a `Range` instance.
+The return value is a `Range` instance or `null` if the quote is not found.
 
 ### `toTextPosition(root, selector, [options])`
 
-Given an `Object` `selector` with an `exact` key, returns an `Object` with
-keys `start` and `end`. The sub-string `[start, end)` of the text content of
-the `root` `Node` is an approximate match for the value of the `exact` key.
+Given an `Object` `selector` with an `exact` key, returns an `Object` with keys
+`start` and `end`. The sub-string `[start, end)` of the text content of the
+`root` `Node` is an approximate match for the value of the `exact` key.
 Optional `selector` keys `prefix` and `suffix`, if provided, are used to
-disambiguate between multiple matches.
+disambiguate between multiple matches. The return value is `null` if the quote
+is not found.
 
 If the `options` argument is an `Object` with an integer valued `hint` key
 then the quote search will prioritize matches that are closer to this offset
