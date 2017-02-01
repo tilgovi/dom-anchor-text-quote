@@ -160,7 +160,7 @@ describe('textQuote', () => {
       assert.isNull(range)
     })
 
-    it('throws an error when a long quote is not found', () => {
+    it('returns null when a long quote is not found', () => {
       let exact = 'Quisque sit amet est et sapien ullam triceracorn'
       let range = toRange(fixture.el, {exact})
       assert.isNull(range)
