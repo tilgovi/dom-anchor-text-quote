@@ -1,6 +1,10 @@
 import {fromRange, toRange} from '../src'
 import {fromTextPosition, toTextPosition} from '../src'
 
+function simplify(str) {
+  return str.replace(/\s+/g, ' ')
+}
+
 describe('textQuote', () => {
   before(() => {
     fixture.setBase('test/fixtures')
@@ -160,10 +164,26 @@ describe('textQuote', () => {
       assert.isNull(range)
     })
 
-    it('throws an error when a long quote is not found', () => {
-      let exact = 'Quisque sit amet est et sapien ullam triceracorn'
-      let range = toRange(fixture.el, {exact})
-      assert.isNull(range)
+    it('returns null when a long quote is not found', () => {
+      let exact = [
+        // Long quote whose first 32 chars match, but whose remainder does not
+        'Quisque sit amet est et sapien ullam triceracorn',
+
+        // Long quote where no part matches
+        'This is a long quote which does not match any part of the text',
+
+        // Long quote where the start and end match but a chunk in the middle
+        // does not
+        simplify(`Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. *** DOES NOT MATCH*** tortor
+            quam, feugiat vitae, ultricies eget, *** DOES NOT MATCH ***. Donec
+            eu libero sit amet quam egestas semper.`)
+      ];
+
+      exact.forEach((exact) => {
+        let range = toRange(fixture.el, {exact})
+        assert.isNull(range)
+      });
     })
 
     it('uses a hint option to prioritize matches', () => {
