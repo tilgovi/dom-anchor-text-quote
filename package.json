@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint src && BABEL_ENV=test karma start --single-run",
+    "test:watch": "eslint src && BABEL_ENV=test karma start",
     "prepublish": "babel -d lib src"
   },
   "repository": {
