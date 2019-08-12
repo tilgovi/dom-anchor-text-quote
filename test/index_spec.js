@@ -196,3 +196,29 @@ describe('textQuote', () => {
     })
   })
 })
+
+describe('textQuote', () => {
+  before(() => {
+    fixture.setBase('test/fixtures')
+  })
+
+  beforeEach(() => {
+    fixture.load('test_2.html')
+  })
+
+  afterEach(() => {
+    fixture.cleanup()
+  })
+
+   describe('toRange', () => {
+    it('finds the right match if another one with similar prefix exists in the content', () => {
+      let exact = 'characteristic'
+      let prefix = 'A physical property is a '
+      let suffix = ' or feature that can be measu'
+      let range = toRange(fixture.el, {exact, prefix, suffix})
+      let text = range.toString()
+      assert.equal(text, exact)
+      assert.equal(261, range.startOffset)
+    })
+   })
+})

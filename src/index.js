@@ -94,19 +94,17 @@ export function toTextPosition(root, selector, options = {}) {
   let result = -1
   let havePrefix = prefix !== undefined
   let haveSuffix = suffix !== undefined
-  let foundPrefix = false
 
   // If the prefix is known then search for that first.
   if (havePrefix) {
     result = dmp.match_main(root.textContent, prefix, loc)
     if (result > -1) {
       loc = result + prefix.length
-      foundPrefix = true
     }
   }
 
-  // If we have a suffix, and the prefix wasn't found, then search for it.
-  if (haveSuffix && !foundPrefix) {
+  // If we have a suffix
+  if (haveSuffix) {
     result = dmp.match_main(root.textContent, suffix, loc + exact.length)
     if (result > -1) {
       loc = result - exact.length
