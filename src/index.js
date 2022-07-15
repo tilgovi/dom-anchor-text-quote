@@ -61,6 +61,7 @@ export function toRange(root, selector, options = {}) {
   if (position === null) {
     return null
   } else {
+    position.end = Math.min(position.end, root.textContent.length);
     return textPosition.toRange(root, position)
   }
 }
