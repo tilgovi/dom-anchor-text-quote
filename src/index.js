@@ -154,5 +154,5 @@ export function toTextPosition(root, selector, options = {}) {
     return null
   }
 
-  return {start: acc.start, end: acc.end}
+  return {start: acc.start, end: Math.min(acc.end, root.textContent.length)}
 }

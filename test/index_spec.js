@@ -194,5 +194,14 @@ describe('textQuote', () => {
       let rangeLast = toRange(fixture.el, {exact}, {hint: last})
       assert.notEqual(rangeFirst.startContainer, rangeLast.startContainer)
     })
+
+    it('does not overflow the end', () => {
+      let exact = 'Ut felis. xxx'
+      let prefix = 'pulvinar facilisis. '
+      let suffix = ''
+      let range = toRange(fixture.el, {exact, prefix, suffix})
+      let text = range.toString()
+      assert.equal(text, 'Ut felis.')
+    })
   })
 })
